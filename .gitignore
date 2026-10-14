@@ -1,0 +1,22 @@
+# Haskell / Cabal
+dist-newstyle/
+*.o
+*.hi
+.cabal-sandbox/
+cabal.project.local
+
+# Node / Vite
+node_modules/
+dist/
+*.local
+
+# Docker / datos
+pgdata/
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/

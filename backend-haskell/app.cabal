@@ -1,0 +1,21 @@
+cabal-version:      2.4
+name:               app-funcional
+version:            0.1.0.0
+synopsis:           Laboratorio Interactivo de Algoritmos Funcionales - UPSE
+build-type:         Simple
+
+executable servidor-funcional
+    main-is:          Main.hs
+    hs-source-dirs:   src
+    other-modules:    Modulos.Unidad1
+                    , Modulos.Unidad2
+    build-depends:
+        base        >=4.14  && <5,
+        scotty      >=0.20  && <0.23,
+        aeson       >=2.0   && <3,
+        wai         >=3.2   && <4,
+        wai-cors    >=0.2   && <0.3,
+        http-types  >=0.12  && <0.13,
+        text        >=2.0   && <2.2
+    default-language: Haskell2010
+    ghc-options:      -Wall -threaded -O0 -j

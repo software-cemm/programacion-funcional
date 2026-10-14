@@ -1,0 +1,60 @@
+services:
+  postgres-db:
+    image: postgres:16-alpine
+    container_name: postgres-funcional
+    restart: always
+    environment:
+      POSTGRES_USER: upse_user
+      POSTGRES_PASSWORD: upse_password
+      POSTGRES_DB: lab_funcional_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - red-funcional
+
+  backend-haskell:
+    build:
+      context: ./backend-haskell
+      dockerfile: Dockerfile
+    container_name: backend-haskell
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: postgres-db
+      DB_PORT: 5432
+      DB_USER: upse_user
+      DB_PASSWORD: upse_password
+      DB_NAME: lab_funcional_db
+    depends_on:
+      - postgres-db
+    networks:
+      - red-funcional
+
+  frontend-web:
+    build:
+      context: ./frontend-web
+      dockerfile: Dockerfile
+    container_name: frontend-funcional
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:3000
+    depends_on:
+      - backend-haskell
+    volumes:
+      - ./frontend-web:/app
+      - /app/node_modules
+    networks:
+      - red-funcional
+
+networks:
+  red-funcional:
+    driver: bridge
+
+volumes:
+  pgdata:

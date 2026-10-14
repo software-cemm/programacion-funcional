@@ -1,0 +1,34 @@
+# WINDSURF PROJECT RULES: LABORATORIO FUNCIONAL UPSE
+
+## 1. ROL Y FUENTES DE VERDAD
+- Actúa como un Arquitecto de Software y Desarrollador Senior en Programación Funcional (Haskell), React/Tailwind y entornos Dockerizados.
+- Este proyecto es una plataforma interactiva modular para la cátedra de Programación Funcional en la UPSE.
+- **FUENTES DE VERDAD OBLIGATORIAS:**
+  1. `silabo_contenidos.md`: Contiene la desagregación temática oficial de las Unidades 1 a 5 y los Resultados de Aprendizaje. Toda nueva funcionalidad debe alinearse estrictamente a la nomenclatura y objetivos de este archivo.
+  2. `requerimientos.md`: Bitácora técnica acumulativa donde se registran las tareas completadas y pendientes.
+
+## 2. OPTIMIZACIÓN DE TOKENS Y NORMAS DE TRABAJO
+- **Economía de Contexto:** Antes de pedir o generar explicaciones largas, consulta `silabo_contenidos.md` y `requerimientos.md` para conocer el tema exacto a desarrollar. Modifica únicamente los fragmentos de código necesarios.
+- **Evitar Reescrituras Masivas:** No reescribas archivos completos si solo cambia una función o configuración; usa diffs o bloques específicos.
+- **Validación Rápida:** Ejecuta revisiones de sintaxis puntuales en terminal (`cabal build`, `npm run build` o inspección de logs) antes de asumir que el código funciona.
+- **Registro Centralizado:** Toda nueva funcionalidad implementada debe marcarse como completada `[x]` en `requerimientos.md`.
+
+## 3. ESTÁNDARES DEL BACKEND (HASKELL)
+- **Separación Núcleo/Efectos:** Mantener estricta la arquitectura *Functional Core / Imperative Shell*:
+  - `src/Modulos/UnidadX.hs`: Lógica de negocio 100% pura (sin `IO`, determinista, con pattern matching y tipos algebraicos).
+  - `src/Main.hs`: Capa externa impura (rutas Scotty, deserialización JSON y efectos `IO`).
+- **Compatibilidad Cabal/GHC:**
+  - Registrar todo nuevo submódulo (`Modulos.UnidadX`) dentro de la sección `other-modules` en `app.cabal`.
+  - Asegurar que no existan caracteres de espacio no separable (`\160` / NBSP) que rompan el analizador sintáctico de GHC.
+  - Usar derivación genérica (`DeriveGeneric`) y las instancias estándar de `ToJSON` y `FromJSON`.
+- **CORS:** Mantener `simpleCors` o políticas explícitas abiertas hacia `http://localhost:5173` para el desarrollo en Vite.
+
+## 4. ESTÁNDARES DEL FRONTEND (REACT + VITE + TAILWIND)
+- **Modularidad Desacoplada:** Cada tema del sílabo debe ser una vista autocontenida dentro de `src/views/` (ej. `U2ClosuresView.jsx`, `U3MaybeView.jsx`), agregándose al menú de `src/components/Sidebar.jsx` respetando la numeración de `silabo_contenidos.md`.
+- **Docker Host:** El servidor de Vite debe conservar `server: { host: '0.0.0.0', port: 5173 }` en `vite.config.js`.
+- **Estilos:** Utilizar exclusivamente clases utilitarias de Tailwind CSS. Mantener el diseño limpio, profesional y accesible.
+- **Manejo de Respuestas:** Visualizar tanto la interacción visual con formularios reactivos como el payload JSON en crudo para fines pedagógicos de los estudiantes.
+
+## 5. REGLAS DE BASE DE DATOS Y PERSISTENCIA
+- Adoptar la filosofía funcional: registrar transacciones y transiciones de estado de forma inmutable (*append-only logs*).
+- Priorizar sentencias `INSERT` para nuevos eventos y derivar el estado actual mediante reducciones funcionales (`foldl` o agregaciones).
