@@ -105,6 +105,7 @@
 | `docs/unidad-1.md` | Guía didáctica U1: paradigma declarativo, pattern matching, HOFs (concepto → demo → caso real → preguntas) | ✅ Implementado |
 | `docs/unidad-2.md` | Guía didáctica U2: lambdas, closures, inmutabilidad, pureza (concepto → demo → caso real → preguntas) | ✅ Implementado |
 | `docs/retos.md` | Banco de ejercicios graduados (🟢/🟡/🔴) + retos integradores + rúbrica docente | ✅ Implementado |
+| `docs/guia-estudiante.md` | Guía de instalación: requisitos, clone, `docker compose up`, URLs, troubleshooting y flujo de estudio — publicada en Moodle | ✅ Implementado |
 | `docs/unidad-3.md` | Guía didáctica U3 (Maybe/Either/Lazy) — se crea al implementar la unidad | ⬜ Pendiente |
 | `docs/unidad-4.md` | Guía didáctica U4 (concurrencia, QuickCheck, arquitectura) — se crea al implementar la unidad | ⬜ Pendiente |
 | `docs/unidad-5.md` | Guía del proyecto final integrador | ⬜ Pendiente |
